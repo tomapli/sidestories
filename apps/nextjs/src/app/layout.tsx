@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
 
+import { CookieConsentBanner } from "~/app/_components/cookie-consent-banner";
+
 import "~/app/styles.css";
 
 export const metadata: Metadata = {
@@ -42,6 +44,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         className={`${hanken.variable} ${bricolage.variable} min-h-screen bg-[#f3eee8] font-sans text-[#211a16] antialiased`}
       >
         {props.children}
+        <CookieConsentBanner />
       </body>
     </html>
   );
