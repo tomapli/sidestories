@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AboutCTA } from "./about-cta";
-import { MuxVideo } from "./mux-video";
 
 function FounderCard(props: {
   name: string;
@@ -98,9 +97,9 @@ export default function AboutPage() {
           <FounderCard
             name="Kacka"
             role="Holka pro kazdou srandu."
-            image="/side-stories/kacka-selfie-web.jpg"
+            image="/side-stories/kacka-main.webp"
             imageAlt="Kacka ze Side Stories"
-            secondaryImage="/side-stories/kacka-climb-web.jpg"
+            secondaryImage="/side-stories/kacka-secondary.webp"
             secondaryAlt="Kacka na stene"
             accent="#ff9ec0"
           />
@@ -109,8 +108,14 @@ export default function AboutPage() {
 
       <section className="px-4 pb-14 sm:px-6 lg:px-10 lg:pb-20">
         <div className="mx-auto grid max-w-6xl gap-6 overflow-hidden rounded-[2rem] bg-[#170b22] p-4 text-[#fff7ee] shadow-2xl sm:p-6 lg:grid-cols-[0.72fr_1fr] lg:p-8">
-          <div className="mx-auto w-full max-w-[420px] overflow-hidden rounded-[1.5rem] bg-black">
-            <MuxVideo />
+          <div className="relative min-h-[360px] overflow-hidden rounded-[1.5rem] bg-black">
+            <Image
+              src="/side-stories/landing-bottom.webp"
+              alt="Side Stories energie a pohyb"
+              fill
+              sizes="(min-width: 1024px) 30vw, 100vw"
+              className="object-cover"
+            />
           </div>
           <div className="flex flex-col justify-center p-2 sm:p-4 lg:p-8">
             <p className="text-sm font-bold tracking-[0.18em] text-[#ffb45f] uppercase">

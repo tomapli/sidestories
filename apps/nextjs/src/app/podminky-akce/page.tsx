@@ -32,7 +32,7 @@ const sections = [
       "Pořadatelé neodpovídají za úrazy, zranění, újmu na zdraví ani za škody na majetku vzniklé v souvislosti s účastí na akci.",
       "Účastníci se po Praze pohybují samostatně a jsou povinni dodržovat právní předpisy, dopravní předpisy a pokyny pořadatelů.",
       "Pořadatelé neodpovídají za ztrátu nebo odcizení osobních věcí účastníků.",
-      "Akce je určena osobám starším 18 let.",
+      "Akce je určena osobám starším 17 let.",
     ],
   },
   {
@@ -129,10 +129,6 @@ export default function EventTermsPage() {
             <div>
               <dt className="font-semibold text-[#f7f1e9]">Instagram</dt>
               <dd>instagram.com/side.stories.cz</dd>
-            </div>
-            <div>
-              <dt className="font-semibold text-[#f7f1e9]">WhatsApp skupina</dt>
-              <dd>odkaz na skupinu</dd>
             </div>
             <div>
               <dt className="font-semibold text-[#f7f1e9]">

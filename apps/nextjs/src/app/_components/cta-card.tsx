@@ -2,7 +2,7 @@
 
 import posthog from "posthog-js";
 
-const REGISTER_URL = "https://chat.whatsapp.com/BzqGCZUh4Ke5bYZ9FffNjV";
+const REGISTER_URL = "https://luma.com/zizjgsc6";
 const INSTAGRAM_URL = "https://www.instagram.com/side.stories.cz";
 const WHATSAPP_URL = "https://chat.whatsapp.com/BzqGCZUh4Ke5bYZ9FffNjV";
 

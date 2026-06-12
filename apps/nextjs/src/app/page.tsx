@@ -9,7 +9,7 @@ export default function HomePage() {
     <main className="min-h-screen overflow-hidden bg-[#f3eee8] text-[#211a16]">
       <section className="relative min-h-screen px-4 py-5 text-[#fff7ee] sm:px-6 lg:px-10">
         <Image
-          src="/side-stories/prague-hero.jpg"
+          src="/side-stories/landing-cta.webp"
           alt="Praha při západu slunce s Karlovým mostem"
           fill
           priority
@@ -95,7 +95,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl overflow-hidden rounded-[2rem] bg-[#170b22] text-[#fff7ee] shadow-2xl lg:grid-cols-[0.9fr_1.1fr]">
           <div className="relative min-h-[360px]">
             <Image
-              src="/side-stories/kacka-climb-web.jpg"
+              src="/side-stories/landing-bottom.webp"
               alt="Side Stories energie a pohyb"
               fill
               sizes="(min-width: 1024px) 45vw, 100vw"
