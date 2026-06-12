@@ -6,16 +6,22 @@ import { CookieConsentBanner } from "~/app/_components/cookie-consent-banner";
 import "~/app/styles.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL("https://sidestories.cz"),
   title: "Side Stories | Lost in Prag",
   description:
     "Pruchod Prahou, sidequesty, novi lide a vystup z komfortni zony.",
+  applicationName: "Side Stories",
+  authors: [{ name: "Side Stories" }],
+  creator: "Side Stories",
+  publisher: "Side Stories",
   openGraph: {
     title: "Side Stories | Lost in Prag",
     description:
       "Pruchod Prahou, sidequesty, novi lide a vystup z komfortni zony.",
     url: "https://sidestories.cz",
     siteName: "Side Stories",
+    locale: "cs_CZ",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
@@ -39,7 +45,7 @@ const bricolage = Bricolage_Grotesque({
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="cs" suppressHydrationWarning>
       <body
         className={`${hanken.variable} ${bricolage.variable} min-h-screen bg-[#f3eee8] font-sans text-[#211a16] antialiased`}
       >

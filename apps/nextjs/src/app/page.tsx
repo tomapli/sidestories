@@ -1,12 +1,146 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 import { CTACard } from "./_components/cta-card";
 import { MapLink } from "./_components/map-link";
 
+const siteUrl = "https://sidestories.cz";
+const eventName = "Lost in Prague";
+const eventDescription =
+  "Průchod Prahou, plnění sidequestů, poznávání nových lidí a výstup z komfortní zóny.";
+const eventImage = `${siteUrl}/side-stories/landing-cta.webp`;
+const registrationUrl = "https://luma.com/zizjgsc6";
+
+export const metadata: Metadata = {
+  title: `${eventName} | Side Stories`,
+  description: eventDescription,
+  alternates: {
+    canonical: "/",
+  },
+  keywords: [
+    "Lost in Prague",
+    "Side Stories",
+    "akce Praha",
+    "seznamovací akce Praha",
+    "sidequesty Praha",
+    "městská hra Praha",
+  ],
+  openGraph: {
+    title: `${eventName} | Side Stories`,
+    description: eventDescription,
+    url: siteUrl,
+    siteName: "Side Stories",
+    locale: "cs_CZ",
+    type: "website",
+    images: [
+      {
+        url: eventImage,
+        width: 1200,
+        height: 630,
+        alt: "Praha při západu slunce s Karlovým mostem",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${eventName} | Side Stories`,
+    description: eventDescription,
+    images: [eventImage],
+  },
+};
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${siteUrl}/#organization`,
+    name: "Side Stories",
+    url: siteUrl,
+    sameAs: ["https://www.instagram.com/side.stories.cz"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
+    name: "Side Stories",
+    url: siteUrl,
+    inLanguage: "cs-CZ",
+    publisher: {
+      "@id": `${siteUrl}/#organization`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${siteUrl}/#webpage`,
+    url: siteUrl,
+    name: `${eventName} | Side Stories`,
+    description: eventDescription,
+    inLanguage: "cs-CZ",
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    about: {
+      "@id": `${siteUrl}/#event`,
+    },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: eventImage,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "@id": `${siteUrl}/#event`,
+    name: eventName,
+    description: eventDescription,
+    image: [eventImage],
+    url: siteUrl,
+    startDate: "2026-06-24T16:30:00+02:00",
+    endDate: "2026-06-24T19:30:00+02:00",
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    inLanguage: "cs-CZ",
+    location: {
+      "@type": "Place",
+      name: "Pomník Josefa Mánesa",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Alšovo nábřeží",
+        addressLocality: "Praha",
+        addressCountry: "CZ",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 50.0876,
+        longitude: 14.4148,
+      },
+    },
+    organizer: {
+      "@id": `${siteUrl}/#organization`,
+    },
+    performer: {
+      "@id": `${siteUrl}/#organization`,
+    },
+    offers: {
+      "@type": "Offer",
+      url: registrationUrl,
+      price: "150",
+      priceCurrency: "CZK",
+      availability: "https://schema.org/InStock",
+      validFrom: "2026-06-12T00:00:00+02:00",
+    },
+  },
+];
+
 export default function HomePage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#f3eee8] text-[#211a16]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <section className="relative min-h-screen px-4 py-5 text-[#fff7ee] sm:px-6 lg:px-10">
         <Image
           src="/side-stories/landing-cta.webp"
@@ -44,7 +178,7 @@ export default function HomePage() {
                   Streda 24. 6. v 16:30
                 </p>
                 <h1 className="font-display text-[4.5rem] leading-[0.86] font-extrabold tracking-normal sm:text-[6.8rem] lg:text-[8.5rem]">
-                  Lost in Prag
+                  Lost in Prague
                 </h1>
                 <p className="mt-6 max-w-2xl text-lg leading-7 font-medium text-[#fff7ee]/90 sm:text-2xl sm:leading-9">
                   Pruchod Prahou, plneni sidequestu, poznavani novych lidi a
