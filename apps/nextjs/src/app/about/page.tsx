@@ -1,52 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { AboutCTA } from "./about-cta";
 import { MuxVideo } from "./mux-video";
-
-const REGISTER_URL = "https://chat.whatsapp.com/BzqGCZUh4Ke5bYZ9FffNjV";
-const INSTAGRAM_URL = "https://www.instagram.com/side.stories.cz";
-const WHATSAPP_URL = "https://chat.whatsapp.com/BzqGCZUh4Ke5bYZ9FffNjV";
-
-function InstagramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5">
-      <rect
-        x="3"
-        y="3"
-        width="18"
-        height="18"
-        rx="5.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <circle
-        cx="12"
-        cy="12"
-        r="4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5">
-      <path
-        d="M4 20l1.4-4.1A8 8 0 1 1 8.1 18.6L4 20z"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
 
 function FounderCard(props: {
   name: string;
@@ -69,7 +25,7 @@ function FounderCard(props: {
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_42%,rgba(15,5,25,0.9)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 p-6 text-[#fff7ee]">
-          <h2 className="font-display text-5xl font-extrabold leading-none">
+          <h2 className="font-display text-5xl leading-none font-extrabold">
             {props.name}
           </h2>
           <p className="mt-2 text-lg font-bold" style={{ color: props.accent }}>
@@ -98,7 +54,7 @@ export default function AboutPage() {
           <nav className="flex items-center justify-between gap-4">
             <Link
               href="/"
-              className="font-display text-sm font-bold uppercase tracking-[0.16em]"
+              className="font-display text-sm font-bold tracking-[0.16em] uppercase"
             >
               Side Stories
             </Link>
@@ -112,10 +68,10 @@ export default function AboutPage() {
 
           <div className="grid gap-8 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-end lg:py-24">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#ffb45f]">
+              <p className="text-sm font-bold tracking-[0.18em] text-[#ffb45f] uppercase">
                 O nas
               </p>
-              <h1 className="mt-4 font-display text-5xl font-extrabold leading-[0.92] tracking-normal sm:text-7xl">
+              <h1 className="font-display mt-4 text-5xl leading-[0.92] font-extrabold tracking-normal sm:text-7xl">
                 Kdo za tim stoji
               </h1>
             </div>
@@ -157,45 +113,18 @@ export default function AboutPage() {
             <MuxVideo />
           </div>
           <div className="flex flex-col justify-center p-2 sm:p-4 lg:p-8">
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#ffb45f]">
+            <p className="text-sm font-bold tracking-[0.18em] text-[#ffb45f] uppercase">
               Takhle to u nas vypada
             </p>
-            <h2 className="mt-4 font-display text-4xl font-extrabold leading-none sm:text-5xl">
+            <h2 className="font-display mt-4 text-4xl leading-none font-extrabold sm:text-5xl">
               Prave pratelstvi casto zacina mimo komfortni zonu.
             </h2>
             <p className="mt-5 text-lg leading-8 text-[#fff7ee]/82">
-              Side Stories je pro lidi, kteri chteji zazit mesto jinak a
-              potkat nekoho noveho bez trapneho networkingu. Dostanes tym,
-              sidequesty a duvod zacit mluvit.
+              Side Stories je pro lidi, kteri chteji zazit mesto jinak a potkat
+              nekoho noveho bez trapneho networkingu. Dostanes tym, sidequesty a
+              duvod zacit mluvit.
             </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              <a
-                href={REGISTER_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="flex min-h-12 items-center justify-center rounded-full bg-[#fff7ee] px-5 py-3 font-display text-lg font-bold text-[#170b22] transition hover:bg-white sm:col-span-3"
-              >
-                Registrovat se -&gt;
-              </a>
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-3 font-bold transition hover:bg-white/15 sm:col-span-1"
-              >
-                <InstagramIcon />
-                Instagram
-              </a>
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-3 font-bold transition hover:bg-white/15 sm:col-span-2"
-              >
-                <WhatsAppIcon />
-                WhatsApp
-              </a>
-            </div>
+            <AboutCTA />
           </div>
         </div>
       </section>

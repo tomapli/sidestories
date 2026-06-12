@@ -1,64 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const REGISTER_URL = "https://chat.whatsapp.com/BzqGCZUh4Ke5bYZ9FffNjV";
-const INSTAGRAM_URL = "https://www.instagram.com/side.stories.cz";
-const WHATSAPP_URL = "https://chat.whatsapp.com/BzqGCZUh4Ke5bYZ9FffNjV";
-const START_MAP_URL = "https://maps.app.goo.gl/KveAJP7a8HSzxFky8";
-const END_MAP_URL = "https://maps.app.goo.gl/9ZL2Zw7U5M6BLoPk6";
-
-function InstagramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5">
-      <rect
-        x="3"
-        y="3"
-        width="18"
-        height="18"
-        rx="5.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <circle
-        cx="12"
-        cy="12"
-        r="4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5">
-      <path
-        d="M4 20l1.4-4.1A8 8 0 1 1 8.1 18.6L4 20z"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
+import { CTACard } from "./_components/cta-card";
+import { MapLink } from "./_components/map-link";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#f3eee8] text-[#211a16]">
       <section className="relative min-h-screen px-4 py-5 text-[#fff7ee] sm:px-6 lg:px-10">
         <Image
-          src="/side-stories/tom-bridge-web.jpg"
-          alt="Praha během akce Side Stories"
+          src="/side-stories/lost-in-prague-fire.webp"
+          alt="Účastnice Lost in Prague s ohněm"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_28%]"
+          quality={82}
+          className="object-cover object-[center_52%]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,11,34,0.28)_0%,rgba(23,11,34,0.2)_35%,rgba(118,27,70,0.68)_72%,rgba(18,8,28,0.96)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,114,60,0.45),rgba(42,16,74,0.06)_45%,rgba(17,87,83,0.28))]" />
@@ -95,44 +52,7 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className="rounded-[2rem] border border-white/18 bg-[#13091f]/72 p-4 shadow-2xl backdrop-blur-xl sm:p-5">
-                <a
-                  href={REGISTER_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-display flex min-h-14 items-center justify-center rounded-full bg-[#fff7ee] px-6 py-4 text-xl font-bold text-[#170b22] shadow-lg transition hover:translate-y-[-1px] hover:bg-white"
-                >
-                  Registrovat se
-                  <span className="ml-2" aria-hidden="true">
-                    -&gt;
-                  </span>
-                </a>
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  <a
-                    href={INSTAGRAM_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/25 bg-white/12 px-3 py-3 text-sm font-bold transition hover:bg-white/20"
-                    aria-label="Side Stories Instagram"
-                  >
-                    <InstagramIcon />
-                    Instagram
-                  </a>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/25 bg-white/12 px-3 py-3 text-sm font-bold transition hover:bg-white/20"
-                    aria-label="Side Stories WhatsApp"
-                  >
-                    <WhatsAppIcon />
-                    WhatsApp
-                  </a>
-                </div>
-                <p className="mt-4 text-center text-sm text-[#fff7ee]/75">
-                  Sraz u pomniku Josefa Manesa na Alsove nabrezi.
-                </p>
-              </div>
+              <CTACard />
             </div>
           </div>
         </div>
@@ -196,14 +116,7 @@ export default function HomePage() {
               dobrodruzny a presne tak akorat mimo komfortni zonu.
             </p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              <a
-                href={START_MAP_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-2xl border border-white/16 bg-white/10 p-4 font-semibold transition hover:bg-white/15"
-              >
-                Start: pomnik Josefa Manesa
-              </a>
+              <MapLink />
             </div>
           </div>
         </div>
