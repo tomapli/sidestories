@@ -1,15 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
+import Script from "next/script";
 
 import "~/app/styles.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"),
-  title: "Side Stories | Lost in Prague",
+  title: "Side Stories | Lost in Prag",
   description:
     "Pruchod Prahou, sidequesty, novi lide a vystup z komfortni zony.",
   openGraph: {
-    title: "Side Stories | Lost in Prague",
+    title: "Side Stories | Lost in Prag",
     description:
       "Pruchod Prahou, sidequesty, novi lide a vystup z komfortni zony.",
     url: "https://sidestories.cz",
@@ -42,6 +43,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         className={`${hanken.variable} ${bricolage.variable} min-h-screen bg-[#f3eee8] font-sans text-[#211a16] antialiased`}
       >
         {props.children}
+        <Script
+          id="luma-checkout"
+          src="https://embed.lu.ma/checkout-button.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

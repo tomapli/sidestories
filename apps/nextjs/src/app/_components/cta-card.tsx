@@ -2,7 +2,8 @@
 
 import posthog from "posthog-js";
 
-const REGISTER_URL = "https://luma.com/zizjgsc6";
+import { LumaCheckoutButton } from "./luma-checkout-button";
+
 const INSTAGRAM_URL = "https://www.instagram.com/side.stories.cz";
 const WHATSAPP_URL = "https://chat.whatsapp.com/BzqGCZUh4Ke5bYZ9FffNjV";
 
@@ -50,20 +51,7 @@ function WhatsAppIcon() {
 export function CTACard() {
   return (
     <div className="rounded-[2rem] border border-white/18 bg-[#13091f]/72 p-4 shadow-2xl backdrop-blur-xl sm:p-5">
-      <a
-        href={REGISTER_URL}
-        target="_blank"
-        rel="noreferrer"
-        className="font-display flex min-h-14 items-center justify-center rounded-full bg-[#fff7ee] px-6 py-4 text-xl font-bold text-[#170b22] shadow-lg transition hover:translate-y-[-1px] hover:bg-white"
-        onClick={() =>
-          posthog.capture("registration_clicked", { page: "home" })
-        }
-      >
-        Registrovat se
-        <span className="ml-2" aria-hidden="true">
-          -&gt;
-        </span>
-      </a>
+      <LumaCheckoutButton page="home" />
       <div className="mt-3 grid grid-cols-2 gap-3">
         <a
           href={INSTAGRAM_URL}
