@@ -9,13 +9,13 @@ export default function HomePage() {
     <main className="min-h-screen overflow-hidden bg-[#f3eee8] text-[#211a16]">
       <section className="relative min-h-screen px-4 py-5 text-[#fff7ee] sm:px-6 lg:px-10">
         <Image
-          src="/side-stories/lost-in-prague-fire.webp"
-          alt="Účastnice Lost in Prague s ohněm"
+          src="/side-stories/prague-hero.jpg"
+          alt="Praha při západu slunce s Karlovým mostem"
           fill
           priority
           sizes="100vw"
           quality={82}
-          className="object-cover object-[center_52%]"
+          className="object-cover object-[center_45%]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,11,34,0.28)_0%,rgba(23,11,34,0.2)_35%,rgba(118,27,70,0.68)_72%,rgba(18,8,28,0.96)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,114,60,0.45),rgba(42,16,74,0.06)_45%,rgba(17,87,83,0.28))]" />
