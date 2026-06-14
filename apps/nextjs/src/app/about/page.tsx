@@ -2,6 +2,37 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AboutCTA } from "./about-cta";
+import {
+  createOrganizationJsonLd,
+  createPeopleJsonLd,
+  createWebsiteJsonLd,
+  siteUrl,
+} from "~/lib/seo";
+
+const peopleStructuredData = createPeopleJsonLd();
+
+const structuredData = [
+  createOrganizationJsonLd(),
+  createWebsiteJsonLd(),
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${siteUrl}/about#webpage`,
+    url: `${siteUrl}/about`,
+    name: "O nas | Side Stories",
+    inLanguage: "cs-CZ",
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    about: {
+      "@id": `${siteUrl}/#organization`,
+    },
+    mainEntity: peopleStructuredData.map((person) => ({
+      "@id": person["@id"],
+    })),
+  },
+  ...peopleStructuredData,
+];
 
 function FounderCard(props: {
   name: string;
@@ -48,6 +79,10 @@ function FounderCard(props: {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#f3eee8] text-[#211a16]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <section className="bg-[#170b22] px-4 py-5 text-[#fff7ee] sm:px-6 lg:px-10">
         <div className="mx-auto max-w-6xl">
           <nav className="flex items-center justify-between gap-4">

@@ -4,17 +4,17 @@ import Link from "next/link";
 
 import { CTACard } from "./_components/cta-card";
 import { MapLink } from "./_components/map-link";
-
-const siteUrl = "https://sidestories.cz";
-const eventName = "Lost in Prague";
-const eventDescription =
-  "Průchod Prahou, plnění sidequestů, poznávání nových lidí a výstup z komfortní zóny.";
-const eventImage = `${siteUrl}/side-stories/landing-cta.webp`;
-const registrationUrl = "https://luma.com/zizjgsc6";
+import {
+  createEventJsonLd,
+  createOrganizationJsonLd,
+  createWebsiteJsonLd,
+  event,
+  siteUrl,
+} from "~/lib/seo";
 
 export const metadata: Metadata = {
-  title: `${eventName} | Side Stories`,
-  description: eventDescription,
+  title: `${event.name} | Side Stories`,
+  description: event.description,
   alternates: {
     canonical: "/",
   },
@@ -27,15 +27,15 @@ export const metadata: Metadata = {
     "městská hra Praha",
   ],
   openGraph: {
-    title: `${eventName} | Side Stories`,
-    description: eventDescription,
+    title: `${event.name} | Side Stories`,
+    description: event.description,
     url: siteUrl,
     siteName: "Side Stories",
     locale: "cs_CZ",
     type: "website",
     images: [
       {
-        url: eventImage,
+        url: event.image,
         width: 1200,
         height: 630,
         alt: "Praha při západu slunce s Karlovým mostem",
@@ -44,39 +44,22 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${eventName} | Side Stories`,
-    description: eventDescription,
-    images: [eventImage],
+    title: `${event.name} | Side Stories`,
+    description: event.description,
+    images: [event.image],
   },
 };
 
 const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${siteUrl}/#organization`,
-    name: "Side Stories",
-    url: siteUrl,
-    sameAs: ["https://www.instagram.com/side.stories.cz"],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${siteUrl}/#website`,
-    name: "Side Stories",
-    url: siteUrl,
-    inLanguage: "cs-CZ",
-    publisher: {
-      "@id": `${siteUrl}/#organization`,
-    },
-  },
+  createOrganizationJsonLd(),
+  createWebsiteJsonLd(),
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `${siteUrl}/#webpage`,
     url: siteUrl,
-    name: `${eventName} | Side Stories`,
-    description: eventDescription,
+    name: `${event.name} | Side Stories`,
+    description: event.description,
     inLanguage: "cs-CZ",
     isPartOf: {
       "@id": `${siteUrl}/#website`,
@@ -86,52 +69,10 @@ const structuredData = [
     },
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: eventImage,
+      url: event.image,
     },
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    "@id": `${siteUrl}/#event`,
-    name: eventName,
-    description: eventDescription,
-    image: [eventImage],
-    url: siteUrl,
-    startDate: "2026-06-24T16:30:00+02:00",
-    endDate: "2026-06-24T19:30:00+02:00",
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    inLanguage: "cs-CZ",
-    location: {
-      "@type": "Place",
-      name: "Pomník Josefa Mánesa",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Alšovo nábřeží",
-        addressLocality: "Praha",
-        addressCountry: "CZ",
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: 50.0876,
-        longitude: 14.4148,
-      },
-    },
-    organizer: {
-      "@id": `${siteUrl}/#organization`,
-    },
-    performer: {
-      "@id": `${siteUrl}/#organization`,
-    },
-    offers: {
-      "@type": "Offer",
-      url: registrationUrl,
-      price: "150",
-      priceCurrency: "CZK",
-      availability: "https://schema.org/InStock",
-      validFrom: "2026-06-12T00:00:00+02:00",
-    },
-  },
+  createEventJsonLd(),
 ];
 
 export default function HomePage() {
