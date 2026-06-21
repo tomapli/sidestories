@@ -1,29 +1,43 @@
 import "server-only";
 
 import { cache } from "react";
-import { headers } from "next/headers";
-import { nextCookies } from "better-auth/next-js";
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
 
-import { initAuth } from "@acme/auth";
+import { mapSupabaseUser } from "@acme/auth";
 
 import { env } from "~/env";
 
-const baseUrl =
-  env.VERCEL_ENV === "production"
-    ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : env.VERCEL_ENV === "preview"
-      ? `https://${env.VERCEL_URL}`
-      : "http://localhost:3000";
+export async function createSupabaseServerClient() {
+  const cookieStore = await cookies();
 
-export const auth = initAuth({
-  baseUrl,
-  productionUrl: `https://${env.VERCEL_PROJECT_PRODUCTION_URL ?? "turbo.t3.gg"}`,
-  secret: env.AUTH_SECRET,
-  discordClientId: env.AUTH_DISCORD_ID,
-  discordClientSecret: env.AUTH_DISCORD_SECRET,
-  extraPlugins: [nextCookies()],
+  return createServerClient(
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options);
+            });
+          } catch {
+            // Server Components cannot set cookies. Middleware refreshes sessions.
+          }
+        },
+      },
+    },
+  );
+}
+
+export const getSession = cache(async () => {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return user ? { user: mapSupabaseUser(user) } : null;
 });
-
-export const getSession = cache(async () =>
-  auth.api.getSession({ headers: await headers() }),
-);

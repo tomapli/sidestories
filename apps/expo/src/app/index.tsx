@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import type { RouterOutputs } from "~/utils/api";
 import { trpc } from "~/utils/api";
-import { authClient } from "~/utils/auth";
+import { signInWithGoogle, supabase, useAuthSession } from "~/utils/auth";
 
 function PostCard(props: {
   post: RouterOutputs["post"]["all"][number];
@@ -99,28 +99,38 @@ function CreatePost() {
 }
 
 function MobileAuth() {
-  const { data: session } = authClient.useSession();
+  const session = useAuthSession();
+  const metadata = session?.user.user_metadata as
+    | Record<string, unknown>
+    | undefined;
+  const displayName =
+    getMetadataString(metadata, "full_name") ??
+    getMetadataString(metadata, "name") ??
+    session?.user.email;
 
   return (
     <>
       <Text className="text-foreground pb-2 text-center text-xl font-semibold">
-        {session?.user.name ? `Hello, ${session.user.name}` : "Not logged in"}
+        {displayName ? `Hello, ${displayName}` : "Not logged in"}
       </Text>
       <Pressable
         onPress={() =>
-          session
-            ? authClient.signOut()
-            : authClient.signIn.social({
-                provider: "discord",
-                callbackURL: "/",
-              })
+          session ? supabase.auth.signOut() : signInWithGoogle()
         }
         className="bg-primary flex items-center rounded-sm p-2"
       >
-        <Text>{session ? "Sign Out" : "Sign In With Discord"}</Text>
+        <Text>{session ? "Sign Out" : "Sign In With Google"}</Text>
       </Pressable>
     </>
   );
+}
+
+function getMetadataString(
+  metadata: Record<string, unknown> | undefined,
+  key: string,
+) {
+  const value = metadata?.[key];
+  return typeof value === "string" && value.length > 0 ? value : null;
 }
 
 export default function Index() {
