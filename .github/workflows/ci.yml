@@ -55,3 +55,41 @@ jobs:
 
       - name: Typecheck
         run: pnpm typecheck
+
+  db-migrations:
+    name: DB migrations up to date
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      # drizzle-kit generate only diffs the schema against the committed
+      # snapshot under supabase/drizzle/meta; it never connects to a database,
+      # but the config still requires POSTGRES_URL to be set.
+      - name: Copy env
+        shell: bash
+        run: cp .env.example .env
+
+      # Call the package script directly (not via turbo) so it runs headless;
+      # the turbo `generate` task is interactive for local dev. </dev/null
+      # guarantees it never blocks on a prompt: if the schema changed in a way
+      # that needs a decision (e.g. a rename), generate gets EOF and exits
+      # non-zero, failing the job instead of hanging.
+      - name: Regenerate migrations from schema
+        run: pnpm -F @acme/db generate </dev/null
+
+      # If regeneration produced any change, the schema was modified without a
+      # corresponding committed migration — i.e. the required decisions were not
+      # made. Fail so it gets resolved before reaching the deploy (CD) step.
+      - name: Fail if migrations are out of date
+        shell: bash
+        run: |
+          if [ -n "$(git status --porcelain supabase/drizzle)" ]; then
+            echo "::error::Schema changes are not captured in committed migrations."
+            echo "Run 'pnpm db:generate' locally, answer any prompts, and commit supabase/drizzle."
+            git status --porcelain supabase/drizzle
+            git --no-pager diff -- supabase/drizzle
+            exit 1
+          fi

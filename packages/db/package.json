@@ -25,6 +25,7 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "generate": "pnpm with-env drizzle-kit generate",
     "lint": "eslint --flag unstable_native_nodejs_ts_config",
+    "migrate": "pnpm with-env drizzle-kit migrate",
     "push": "pnpm with-env drizzle-kit push",
     "studio": "pnpm with-env drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",

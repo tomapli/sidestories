@@ -36,6 +36,13 @@
       "cache": false,
       "interactive": true
     },
+    "generate": {
+      "cache": false,
+      "interactive": true
+    },
+    "migrate": {
+      "cache": false
+    },
     "db:local:reset": {
       "dependsOn": ["@acme/supabase#supabase:start"],
       "cache": false
