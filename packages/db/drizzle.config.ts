@@ -15,10 +15,22 @@ const ca = readFileSync(
   "utf-8",
 );
 
+// drizzle-kit ignores `dbCredentials.ssl` whenever a `url` is supplied (it
+// passes only the connection string to the driver). Split the URL into
+// discrete fields so the SSL/CA config is actually applied.
+const url = new URL(nonPoolingUrl);
+
 export default {
   schema: "./src/schema.ts",
   out: "../../supabase/drizzle",
   dialect: "postgresql",
-  dbCredentials: { url: nonPoolingUrl, ssl: { ca } },
+  dbCredentials: {
+    host: url.hostname,
+    port: url.port ? Number(url.port) : 5432,
+    user: decodeURIComponent(url.username),
+    password: decodeURIComponent(url.password),
+    database: url.pathname.replace(/^\//, ""),
+    ssl: { ca },
+  },
   casing: "snake_case",
 } satisfies Config;
