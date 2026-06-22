@@ -4,7 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 
 import { env } from "~/env";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({
     request,
   });
