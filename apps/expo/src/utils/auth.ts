@@ -34,9 +34,10 @@ const supabasePublishableKey = isProductionEnv
 export const supabase = createClient(supabaseUrl, supabasePublishableKey, {
   auth: {
     storage: {
-      getItem: (key) => SecureStore.getItemAsync(key),
-      setItem: (key, value) => SecureStore.setItemAsync(key, value),
-      removeItem: (key) => SecureStore.deleteItemAsync(key),
+      getItem: (key: string) => SecureStore.getItemAsync(key),
+      setItem: (key: string, value: string) =>
+        SecureStore.setItemAsync(key, value),
+      removeItem: (key: string) => SecureStore.deleteItemAsync(key),
     },
     autoRefreshToken: true,
     detectSessionInUrl: false,

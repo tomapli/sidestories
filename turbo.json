@@ -24,7 +24,7 @@
     },
     "typecheck": {
       "dependsOn": ["^topo", "^build"],
-      "outputs": [".cache/tsbuildinfo.json"]
+      "cache": false
     },
     "clean": {
       "cache": false
