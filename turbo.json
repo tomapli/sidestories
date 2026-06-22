@@ -36,6 +36,18 @@
       "cache": false,
       "interactive": true
     },
+    "db:local:reset": {
+      "dependsOn": ["@acme/supabase#supabase:start"],
+      "cache": false
+    },
+    "db:local:push": {
+      "dependsOn": ["@acme/supabase#db:local:reset"],
+      "cache": false
+    },
+    "db:local:seed": {
+      "dependsOn": ["@acme/db#db:local:push"],
+      "cache": false
+    },
     "studio": {
       "cache": false,
       "persistent": true

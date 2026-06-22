@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable } from "drizzle-orm/pg-core";
+import { pgSchema, pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
@@ -11,6 +11,25 @@ export const Post = pgTable("post", (t) => ({
   updatedAt: t
     .timestamp({ mode: "date", withTimezone: true })
     .$onUpdateFn(() => sql`now()`),
+}));
+
+export const authSchema = pgSchema("auth");
+
+export const AuthUser = authSchema.table("users", (t) => ({
+  id: t.uuid().notNull().primaryKey(),
+}));
+
+export const User = pgTable("users", (t) => ({
+  userId: t
+    .uuid("user_id")
+    .notNull()
+    .primaryKey()
+    .references(() => AuthUser.id, { onDelete: "cascade" }),
+  adminSince: t.timestamp("admin_since", {
+    mode: "date",
+    withTimezone: true,
+  }),
+  createdAt: t.timestamp("created_at").defaultNow().notNull(),
 }));
 
 export const CreatePostSchema = createInsertSchema(Post, {
