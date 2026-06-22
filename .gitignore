@@ -54,3 +54,7 @@ dist/
 
 # tanstack
 .tanstack
+
+.tmp-home
+
+.pnpm-store
