@@ -13,6 +13,7 @@ All interactive decisions (column renames, destructive changes, etc.) must be ma
    pnpm db:generate
    ```
    Answer any prompts Drizzle shows (e.g. "is this a rename or a drop?"). The generated SQL files land in `supabase/drizzle/`.
+   Supabase already owns the `auth` schema and `auth.users`. If a generated migration includes `CREATE SCHEMA "auth"` or `CREATE TABLE "auth"."users"`, remove those statements before committing — keep only the public-schema changes and any foreign keys that reference `auth.users`.
 3. Commit both the schema change and the generated migration files together.
 
 ### Why
