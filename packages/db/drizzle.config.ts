@@ -1,5 +1,4 @@
 import { readFileSync } from "node:fs";
-
 import type { Config } from "drizzle-kit";
 
 if (!process.env.POSTGRES_URL) {
@@ -19,10 +18,10 @@ const ca = readFileSync(
 // passes only the connection string to the driver). Split the URL into
 // discrete fields so the SSL/CA config is actually applied.
 const url = new URL(nonPoolingUrl);
+const isLocalDatabase = ["127.0.0.1", "localhost"].includes(url.hostname);
 
 export default {
   schema: "./src/schema.ts",
-  out: "../../supabase/drizzle",
   dialect: "postgresql",
   dbCredentials: {
     host: url.hostname,
@@ -30,7 +29,7 @@ export default {
     user: decodeURIComponent(url.username),
     password: decodeURIComponent(url.password),
     database: url.pathname.replace(/^\//, ""),
-    ssl: { ca },
+    ssl: isLocalDatabase ? false : { ca },
   },
   casing: "snake_case",
 } satisfies Config;
