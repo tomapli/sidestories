@@ -10,6 +10,8 @@ const localSupabaseEnv = {
   publishableKey: "sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH",
 };
 
+const localSiteUrl = "http://localhost:3000";
+
 const isProductionEnv = process.env.VERCEL_ENV
   ? process.env.VERCEL_ENV === "production"
   : process.env.NODE_ENV === "production";
@@ -40,6 +42,7 @@ export const env = createEnv({
    * For them to be exposed to the client, prefix them with `NEXT_PUBLIC_`.
    */
   client: {
+    NEXT_PUBLIC_SITE_URL: z.url(),
     NEXT_PUBLIC_SUPABASE_URL: z.url(),
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
     NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN: z.string().optional(),
@@ -50,6 +53,9 @@ export const env = createEnv({
    */
   experimental__runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_SITE_URL: useLocalSupabase
+      ? localSiteUrl
+      : process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_SUPABASE_URL: useLocalSupabase
       ? localSupabaseEnv.url
       : process.env.NEXT_PUBLIC_SUPABASE_URL,

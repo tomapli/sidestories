@@ -1,9 +1,9 @@
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { Button } from "@acme/ui/button";
 
 import { createSupabaseServerClient, getSession } from "~/auth/server";
+import { env } from "~/env";
 
 export async function AuthShowcase() {
   const session = await getSession();
@@ -16,11 +16,10 @@ export async function AuthShowcase() {
           formAction={async () => {
             "use server";
             const supabase = await createSupabaseServerClient();
-            const origin = (await headers()).get("origin");
             const { data, error } = await supabase.auth.signInWithOAuth({
               provider: "google",
               options: {
-                redirectTo: `${origin ?? ""}/auth/callback`,
+                redirectTo: `${env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
               },
             });
             if (error) {
