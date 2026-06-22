@@ -14,6 +14,7 @@ All interactive decisions (column renames, destructive changes, etc.) must be ma
    ```
    Answer any prompts Drizzle shows (e.g. "is this a rename or a drop?"). The generated SQL files land in `supabase/drizzle/`.
    Supabase already owns the `auth` schema and `auth.users`. If a generated migration includes `CREATE SCHEMA "auth"` or `CREATE TABLE "auth"."users"`, remove those statements before committing — keep only the public-schema changes and any foreign keys that reference `auth.users`.
+   Never edit a migration after it has been applied in production. Drizzle records it in `drizzle.__drizzle_migrations` and will not re-run it, even if the SQL file changes. Ship follow-up migrations instead.
 3. Commit both the schema change and the generated migration files together.
 
 ### Why
