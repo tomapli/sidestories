@@ -31,8 +31,9 @@ const migrationVersions = () =>
 const before = migrationVersions();
 
 run("pnpm", ["db:push"]);
-run("supabase", ["link", "--project-ref", PROJECT_REF]);
-run("supabase", [
+run("pnpm", ["supabase", "link", "--project-ref", PROJECT_REF]);
+run("pnpm", [
+  "supabase",
   "db",
   "diff",
   "--linked",
@@ -53,7 +54,8 @@ if (createdVersions.length !== 1) {
 // Drizzle already applied the schema change to the linked dev database. Mark
 // the generated migration as applied there so future `supabase db push` runs
 // only apply it to databases that do not have the change yet.
-run("supabase", [
+run("pnpm", [
+  "supabase",
   "migration",
   "repair",
   "--status",
