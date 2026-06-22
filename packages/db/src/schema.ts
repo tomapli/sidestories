@@ -23,6 +23,20 @@ export const Game = pgTable("games", (t) => ({
     .$onUpdateFn(() => sql`now()`),
 }));
 
+export const Task = pgTable("tasks", (t) => ({
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  gameId: t
+    .uuid("game_id")
+    .notNull()
+    .references(() => Game.id, { onDelete: "cascade" }),
+  title: t.varchar({ length: 256 }).notNull(),
+  description: t.text(),
+  createdAt: t.timestamp("created_at").defaultNow().notNull(),
+  updatedAt: t
+    .timestamp("updated_at", { mode: "date", withTimezone: true })
+    .$onUpdateFn(() => sql`now()`),
+}));
+
 export const authSchema = pgSchema("auth");
 
 export const AuthUser = authSchema.table("users", (t) => ({

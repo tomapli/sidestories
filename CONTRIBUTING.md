@@ -10,7 +10,7 @@ Developers push schema changes with Drizzle, then commit the Supabase migration 
 1. Edit the schema in `packages/db/src/schema.ts`.
 2. Push the Drizzle schema and create a Supabase migration:
    ```sh
-   pnpm db:migration new-migration
+   pnpm db:migration
    ```
    This runs `pnpm db:push`, links the project with `supabase link --project-ref xpxpbfzxavfnvxhfcecq`, writes a migration under `supabase/migrations/` from `supabase db diff --linked`, and marks that migration as applied on the linked dev project because Drizzle already changed it there.
 3. Review the generated migration SQL before committing. Supabase owns the `auth` schema and `auth.users`; keep only public-schema changes and any foreign keys that reference `auth.users`.
