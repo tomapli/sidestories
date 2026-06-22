@@ -53,7 +53,7 @@ packages
   ├─ api
   │   └─ tRPC v11 router definition
   ├─ auth
-  │   └─ Authentication using better-auth.
+  │   └─ Authentication helpers using Supabase Auth
   ├─ db
   │   └─ Typesafe db calls using Drizzle & Supabase
   └─ ui
@@ -96,29 +96,19 @@ cp .env.example .env
 pnpm db:push
 ```
 
-### 2. Generate Better Auth Schema
+### 2. Configure Supabase Auth
 
-This project uses [Better Auth](https://www.better-auth.com) for authentication. The auth schema needs to be generated using the Better Auth CLI before you can use the authentication features.
+This project uses Supabase Auth. Add these variables to `.env`:
 
 ```bash
-# Generate the Better Auth schema
-pnpm --filter @acme/auth generate
+NEXT_PUBLIC_SUPABASE_URL="https://xpxpbfzxavfnvxhfcecq.supabase.co"
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="sb_publishable_ZuCfGBILY5tkhknjmDIw5Q_zBLRiAFI"
 ```
 
-This command runs the Better Auth CLI with the following configuration:
+Enable Discord as an OAuth provider in Supabase and add these redirect URLs:
 
-- **Config file**: `packages/auth/script/auth-cli.ts` - A CLI-only configuration file (isolated from src to prevent imports)
-- **Output**: `packages/db/src/auth-schema.ts` - Generated Drizzle schema for authentication tables
-
-The generation process:
-
-1. Reads the Better Auth configuration from `packages/auth/script/auth-cli.ts`
-2. Generates the appropriate database schema based on your auth setup
-3. Outputs a Drizzle-compatible schema file to the `@acme/db` package
-
-> **Note**: The `auth-cli.ts` file is placed in the `script/` directory (instead of `src/`) to prevent accidental imports from other parts of the codebase. This file is exclusively for CLI schema generation and should **not** be used directly in your application. For runtime authentication, use the configuration from `packages/auth/src/index.ts`.
-
-For more information about the Better Auth CLI, see the [official documentation](https://www.better-auth.com/docs/concepts/cli#generate).
+- Next.js: `http://localhost:3000/auth/callback`
+- Expo: `expo://`
 
 ### 3. Configure Expo `dev`-script
 
@@ -146,19 +136,9 @@ For more information about the Better Auth CLI, see the [official documentation]
 
 3. Run `pnpm dev` at the project root folder.
 
-### 4. Configuring Better-Auth to work with Expo
+### 4. Configuring Supabase Auth to work with Expo
 
-In order to get Better-Auth to work with Expo, you must either:
-
-#### Deploy the Auth Proxy (RECOMMENDED)
-
-Better-auth comes with an [auth proxy plugin](https://www.better-auth.com/docs/plugins/oauth-proxy). By deploying the Next.js app, you can get OAuth working in preview deployments and development for Expo apps.
-
-By using the proxy plugin, the Next.js apps will forward any auth requests to the proxy server, which will handle the OAuth flow and then redirect back to the Next.js app. This makes it easy to get OAuth working since you'll have a stable URL that is publicly accessible and doesn't change for every deployment and doesn't rely on what port the app is running on. So if port 3000 is taken and your Next.js app starts at port 3001 instead, your auth should still work without having to reconfigure the OAuth provider.
-
-#### Add your local IP to your OAuth provider
-
-You can alternatively add your local IP (e.g. `192.168.x.y:$PORT`) to your OAuth provider. This may not be as reliable as your local IP may change when you change networks. Some OAuth providers may also only support a single callback URL for each app making this approach unviable for some providers (e.g. GitHub).
+The Expo app opens Supabase's Discord OAuth URL with `expo-web-browser` and exchanges the returned PKCE code in-app. Add the Expo redirect URL from `Linking.createURL("/")` to the Supabase Auth redirect allow list. In local Expo development this is usually `expo://`.
 
 ### 5a. When it's time to add a new UI component
 
@@ -208,10 +188,6 @@ Let's deploy the Next.js application to [Vercel](https://vercel.com). If you've 
 2. Add your `POSTGRES_URL` environment variable.
 
 3. Done! Your app should successfully deploy. Assign your domain and use that instead of `localhost` for the `url` in the Expo app so that your Expo app can communicate with your backend when you are not in development.
-
-### Auth Proxy
-
-The auth proxy comes as a better-auth plugin. This is required for the Next.js app to be able to authenticate users in preview deployments. The auth proxy is not used for OAuth request in production deployments. The easiest way to get it running is to deploy the Next.js app to vercel.
 
 ### Expo
 

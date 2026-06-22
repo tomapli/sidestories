@@ -1,0 +1,38 @@
+name: CD
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  FORCE_COLOR: 3
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+
+jobs:
+  deploy-supabase:
+    name: Deploy Supabase
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    environment: production
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Write database environment
+        shell: bash
+        run: |
+          {
+            echo "POSTGRES_URL=${POSTGRES_URL}"
+          } > .env
+        env:
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+
+      - name: Push database schema
+        run: pnpm db:push

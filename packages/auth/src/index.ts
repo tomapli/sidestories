@@ -1,52 +1,37 @@
-import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
-import { expo } from "@better-auth/expo";
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { oAuthProxy } from "better-auth/plugins";
+import type { User } from "@supabase/supabase-js";
 
-import { db } from "@acme/db/client";
-
-export function initAuth<
-  TExtraPlugins extends BetterAuthPlugin[] = [],
->(options: {
-  baseUrl: string;
-  productionUrl: string;
-  secret: string | undefined;
-
-  discordClientId: string;
-  discordClientSecret: string;
-  extraPlugins?: TExtraPlugins;
-}) {
-  const config = {
-    database: drizzleAdapter(db, {
-      provider: "pg",
-    }),
-    baseURL: options.baseUrl,
-    secret: options.secret,
-    plugins: [
-      oAuthProxy({
-        productionURL: options.productionUrl,
-      }),
-      expo(),
-      ...(options.extraPlugins ?? []),
-    ],
-    socialProviders: {
-      discord: {
-        clientId: options.discordClientId,
-        clientSecret: options.discordClientSecret,
-        redirectURI: `${options.productionUrl}/api/auth/callback/discord`,
-      },
-    },
-    trustedOrigins: ["expo://"],
-    onAPIError: {
-      onError(error, ctx) {
-        console.error("BETTER AUTH API ERROR", error, ctx);
-      },
-    },
-  } satisfies BetterAuthOptions;
-
-  return betterAuth(config);
+export interface SessionUser {
+  id: string;
+  email: string | null;
+  name: string | null;
+  image: string | null;
 }
 
-export type Auth = ReturnType<typeof initAuth>;
-export type Session = Auth["$Infer"]["Session"];
+export interface Session {
+  user: SessionUser;
+}
+
+export function mapSupabaseUser(user: User): SessionUser {
+  const metadata = user.user_metadata as Record<string, unknown>;
+
+  return {
+    id: user.id,
+    email: user.email ?? null,
+    name:
+      getMetadataString(metadata, "full_name") ??
+      getMetadataString(metadata, "name") ??
+      user.email ??
+      null,
+    image:
+      getMetadataString(metadata, "avatar_url") ??
+      getMetadataString(metadata, "picture"),
+  };
+}
+
+function getMetadataString(
+  metadata: Record<string, unknown>,
+  key: string,
+): string | null {
+  const value = metadata[key];
+  return typeof value === "string" && value.length > 0 ? value : null;
+}

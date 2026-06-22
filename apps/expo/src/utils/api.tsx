@@ -5,7 +5,7 @@ import superjson from "superjson";
 
 import type { AppRouter } from "@acme/api";
 
-import { authClient } from "./auth";
+import { supabase } from "./auth";
 import { getBaseUrl } from "./base-url";
 
 export const queryClient = new QueryClient({
@@ -31,13 +31,15 @@ export const trpc = createTRPCOptionsProxy<AppRouter>({
       httpBatchLink({
         transformer: superjson,
         url: `${getBaseUrl()}/api/trpc`,
-        headers() {
+        async headers() {
           const headers = new Map<string, string>();
           headers.set("x-trpc-source", "expo-react");
 
-          const cookies = authClient.getCookie();
-          if (cookies) {
-            headers.set("Cookie", cookies);
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
+          if (session?.access_token) {
+            headers.set("Authorization", `Bearer ${session.access_token}`);
           }
           return headers;
         },

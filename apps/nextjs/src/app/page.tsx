@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import { CTACard } from "./_components/cta-card";
-import { MapLink } from "./_components/map-link";
 import {
   createEventJsonLd,
   createOrganizationJsonLd,
@@ -11,6 +9,8 @@ import {
   event,
   siteUrl,
 } from "~/lib/seo";
+import { CTACard } from "./_components/cta-card";
+import { MapLink } from "./_components/map-link";
 
 export const metadata: Metadata = {
   title: `${event.name} | Side Stories`,

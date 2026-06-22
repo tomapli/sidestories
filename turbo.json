@@ -24,7 +24,7 @@
     },
     "typecheck": {
       "dependsOn": ["^topo", "^build"],
-      "outputs": [".cache/tsbuildinfo.json"]
+      "cache": false
     },
     "clean": {
       "cache": false
@@ -36,9 +36,34 @@
       "cache": false,
       "interactive": true
     },
+    "db:local:reset": {
+      "dependsOn": ["@acme/supabase#supabase:start"],
+      "cache": false
+    },
+    "db:local:push": {
+      "dependsOn": ["@acme/supabase#db:local:reset"],
+      "cache": false
+    },
+    "db:local:seed": {
+      "dependsOn": ["@acme/db#db:local:push"],
+      "cache": false
+    },
     "studio": {
       "cache": false,
       "persistent": true
+    },
+    "supabase:start": {
+      "cache": false
+    },
+    "supabase:status": {
+      "cache": false
+    },
+    "supabase:stop": {
+      "cache": false
+    },
+    "supabase:reset": {
+      "cache": false,
+      "interactive": true
     },
     "ui-add": {
       "cache": false,
@@ -47,10 +72,12 @@
   },
   "globalEnv": [
     "POSTGRES_URL",
-    "AUTH_DISCORD_ID",
-    "AUTH_DISCORD_SECRET",
-    "AUTH_REDIRECT_PROXY_URL",
-    "AUTH_SECRET",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+    "EXPO_PUBLIC_SUPABASE_URL",
+    "EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+    "NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN",
+    "NEXT_PUBLIC_POSTHOG_HOST",
     "PORT"
   ],
   "globalPassThroughEnv": [

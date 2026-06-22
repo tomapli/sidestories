@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { Button } from "@acme/ui/button";
 
-import { auth, getSession } from "~/auth/server";
+import { createSupabaseServerClient, getSession } from "~/auth/server";
 
 export async function AuthShowcase() {
   const session = await getSession();
@@ -15,19 +15,24 @@ export async function AuthShowcase() {
           size="lg"
           formAction={async () => {
             "use server";
-            const res = await auth.api.signInSocial({
-              body: {
-                provider: "discord",
-                callbackURL: "/",
+            const supabase = await createSupabaseServerClient();
+            const origin = (await headers()).get("origin");
+            const { data, error } = await supabase.auth.signInWithOAuth({
+              provider: "google",
+              options: {
+                redirectTo: `${origin ?? ""}/auth/callback`,
               },
             });
-            if (!res.url) {
-              throw new Error("No URL returned from signInSocial");
+            if (error) {
+              throw error;
             }
-            redirect(res.url);
+            if (!data.url) {
+              throw new Error("No URL returned from signInWithOAuth");
+            }
+            redirect(data.url);
           }}
         >
-          Sign in with Discord
+          Sign in with Google
         </Button>
       </form>
     );
@@ -44,9 +49,11 @@ export async function AuthShowcase() {
           size="lg"
           formAction={async () => {
             "use server";
-            await auth.api.signOut({
-              headers: await headers(),
-            });
+            const supabase = await createSupabaseServerClient();
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+              throw error;
+            }
             redirect("/");
           }}
         >

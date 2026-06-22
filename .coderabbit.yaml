@@ -1,0 +1,93 @@
+# CodeRabbit reads this file from the repository root.
+# Docs: https://docs.coderabbit.ai/reference/configuration
+
+language: en-US
+early_access: false
+focus: balanced
+
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  review_details: true
+  collapse_walkthrough: true
+  poem: false
+  in_progress_fortune: false
+  enable_prompt_for_ai_agents: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+    auto_incremental_review: true
+    ignore_title_keywords:
+      - WIP
+      - Draft
+
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/.next/**"
+    - "!**/dist/**"
+    - "!**/build/**"
+    - "!**/coverage/**"
+    - "!**/.turbo/**"
+    - "!**/.expo/**"
+    - "!**/ios/Pods/**"
+    - "!**/android/.gradle/**"
+    - "!**/pnpm-lock.yaml"
+    - "!**/package-lock.json"
+    - "!**/yarn.lock"
+    - "!**/bun.lock"
+    - "!**/bun.lockb"
+    - "!**/Podfile.lock"
+    - "!**/gradle.lockfile"
+
+  path_instructions:
+    - path: "apps/nextjs/**"
+      instructions: "Review as a Next.js App Router application. Pay attention to server/client component boundaries, metadata/SEO behavior, route handlers, and environment variable handling."
+    - path: "apps/expo/**"
+      instructions: "Review as an Expo React Native application. Pay attention to navigation, native platform behavior, session persistence, and API base URL assumptions."
+    - path: "packages/auth/**"
+      instructions: "Treat authentication changes as security-sensitive. Check session handling, cookie behavior, redirects, provider configuration, and secret exposure."
+    - path: "packages/db/**"
+      instructions: "Review schema and database access changes carefully for migration impact, data loss risk, query correctness, and backwards compatibility."
+    - path: "packages/ui/**"
+      instructions: "Review shared UI changes for accessibility, cross-platform assumptions, stable component APIs, and unintended styling regressions."
+    - path: "**/*.{ts,tsx}"
+      instructions: "Prefer the existing monorepo patterns. Flag avoidable type unsafety, unhandled async errors, env misuse, and duplicated logic that crosses package boundaries."
+
+  tools:
+    eslint:
+      enabled: true
+    markdownlint:
+      enabled: true
+    actionlint:
+      enabled: true
+    zizmor:
+      enabled: true
+    osvScanner:
+      enabled: true
+    reactDoctor:
+      enabled: true
+    semgrep:
+      enabled: true
+
+chat:
+  auto_reply: true
+  art: false
+
+knowledge_base:
+  web_search:
+    enabled: true
+  code_guidelines:
+    enabled: true
+  mcp:
+    usage: auto
+    disabled_servers: []
+  learnings:
+    scope: local
+    approval_delay: 7
+  issues:
+    scope: local
+  pull_requests:
+    scope: local

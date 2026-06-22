@@ -1,0 +1,13 @@
+{
+  "name": "@acme/supabase",
+  "private": true,
+  "scripts": {
+    "db:local:reset": "supabase db reset --workdir ../.. --local --no-seed --yes",
+    "db:local:seed": "supabase db query --workdir ../.. --local --file supabase/seed.sql",
+    "dev": "supabase status --workdir ../.. >/dev/null 2>&1 || supabase start --workdir ../.. && supabase status --workdir ../.. && node -e \"console.log('Supabase is running. Press Ctrl+C to stop the dev stack.'); setInterval(() => {}, 2147483647)\"",
+    "supabase:start": "supabase status --workdir ../.. >/dev/null 2>&1 || supabase start --workdir ../..",
+    "supabase:status": "supabase status --workdir ../..",
+    "supabase:stop": "supabase stop --workdir ../..",
+    "supabase:reset": "supabase db reset --workdir ../.."
+  }
+}
