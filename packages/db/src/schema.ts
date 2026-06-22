@@ -13,6 +13,16 @@ export const Post = pgTable("post", (t) => ({
     .$onUpdateFn(() => sql`now()`),
 }));
 
+export const Game = pgTable("games", (t) => ({
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  name: t.varchar({ length: 256 }).notNull(),
+  description: t.text(),
+  createdAt: t.timestamp("created_at").defaultNow().notNull(),
+  updatedAt: t
+    .timestamp("updated_at", { mode: "date", withTimezone: true })
+    .$onUpdateFn(() => sql`now()`),
+}));
+
 export const authSchema = pgSchema("auth");
 
 export const AuthUser = authSchema.table("users", (t) => ({

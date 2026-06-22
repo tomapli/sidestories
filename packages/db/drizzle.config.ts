@@ -23,6 +23,7 @@ const isLocalDatabase = ["127.0.0.1", "localhost"].includes(url.hostname);
 export default {
   schema: "./src/schema.ts",
   dialect: "postgresql",
+  out: "../../supabase/drizzle",
   dbCredentials: {
     host: url.hostname,
     port: url.port ? Number(url.port) : 5432,
