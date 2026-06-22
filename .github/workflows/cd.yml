@@ -29,10 +29,10 @@ jobs:
         shell: bash
         run: |
           {
-            echo "POSTGRES_URL=${POSTGRES_URL}"
+            echo "POSTGRES_URL=${POSTGRES_MIGRATION_URL}"
           } > .env
         env:
-          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_MIGRATION_URL }}
 
       # Applies the migration files committed under supabase/drizzle. This is
       # non-interactive: it can only run schema decisions that were already made
