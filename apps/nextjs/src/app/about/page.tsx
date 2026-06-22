@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { AboutCTA } from "./about-cta";
 import {
   createOrganizationJsonLd,
   createPeopleJsonLd,
   createWebsiteJsonLd,
   siteUrl,
 } from "~/lib/seo";
+import { AboutCTA } from "./about-cta";
 
 const peopleStructuredData = createPeopleJsonLd();
 

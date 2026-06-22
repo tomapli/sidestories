@@ -2,15 +2,15 @@
 
 The wizard has completed a deep integration of PostHog analytics into the Side Stories Next.js landing page. PostHog is initialized via `instrumentation-client.ts` (the recommended approach for Next.js 15.3+), with a reverse proxy configured in `next.config.js` to route events through `/ingest` and reduce ad-blocker interference. Client-side event tracking was added to the two landing pages by extracting interactive CTA sections into dedicated `"use client"` components (`CTACard`, `MapLink`, `AboutCTA`), keeping the server component architecture intact. Environment variables are stored in `.env.local` and declared in `src/env.ts` using the existing `@t3-oss/env-nextjs` validation pattern.
 
-| Event | Description | File |
-|---|---|---|
-| `registration_clicked` | User clicked the 'Registrovat se' (Register) CTA — primary conversion event | `src/app/_components/cta-card.tsx` |
-| `registration_clicked` | User clicked 'Registrovat se' on the About page | `src/app/about/about-cta.tsx` |
-| `instagram_link_clicked` | User clicked the Instagram social link | `src/app/_components/cta-card.tsx` |
-| `instagram_link_clicked` | User clicked the Instagram social link on the About page | `src/app/about/about-cta.tsx` |
-| `whatsapp_link_clicked` | User clicked the WhatsApp community link | `src/app/_components/cta-card.tsx` |
-| `whatsapp_link_clicked` | User clicked the WhatsApp community link on the About page | `src/app/about/about-cta.tsx` |
-| `map_link_clicked` | User clicked the event start location map link | `src/app/_components/map-link.tsx` |
+| Event                    | Description                                                                 | File                               |
+| ------------------------ | --------------------------------------------------------------------------- | ---------------------------------- |
+| `registration_clicked`   | User clicked the 'Registrovat se' (Register) CTA — primary conversion event | `src/app/_components/cta-card.tsx` |
+| `registration_clicked`   | User clicked 'Registrovat se' on the About page                             | `src/app/about/about-cta.tsx`      |
+| `instagram_link_clicked` | User clicked the Instagram social link                                      | `src/app/_components/cta-card.tsx` |
+| `instagram_link_clicked` | User clicked the Instagram social link on the About page                    | `src/app/about/about-cta.tsx`      |
+| `whatsapp_link_clicked`  | User clicked the WhatsApp community link                                    | `src/app/_components/cta-card.tsx` |
+| `whatsapp_link_clicked`  | User clicked the WhatsApp community link on the About page                  | `src/app/about/about-cta.tsx`      |
+| `map_link_clicked`       | User clicked the event start location map link                              | `src/app/_components/map-link.tsx` |
 
 ## Next steps
 

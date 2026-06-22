@@ -31,7 +31,8 @@
 
 @layer utilities {
   .font-display {
-    font-family: var(--font-bricolage), var(--font-hanken), ui-sans-serif,
-      system-ui, sans-serif;
+    font-family:
+      var(--font-bricolage), var(--font-hanken), ui-sans-serif, system-ui,
+      sans-serif;
   }
 }

@@ -114,9 +114,7 @@ function MobileAuth() {
         {displayName ? `Hello, ${displayName}` : "Not logged in"}
       </Text>
       <Pressable
-        onPress={() =>
-          session ? supabase.auth.signOut() : signInWithGoogle()
-        }
+        onPress={() => (session ? supabase.auth.signOut() : signInWithGoogle())}
         className="bg-primary flex items-center rounded-sm p-2"
       >
         <Text>{session ? "Sign Out" : "Sign In With Google"}</Text>
