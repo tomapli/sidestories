@@ -11,7 +11,7 @@ export const Post = pgTable("post", (t) => ({
   updatedAt: t
     .timestamp({ mode: "date", withTimezone: true })
     .$onUpdateFn(() => sql`now()`),
-}));
+})).enableRLS();
 
 export const Game = pgTable("games", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
@@ -21,7 +21,7 @@ export const Game = pgTable("games", (t) => ({
   updatedAt: t
     .timestamp("updated_at", { mode: "date", withTimezone: true })
     .$onUpdateFn(() => sql`now()`),
-}));
+})).enableRLS();
 
 export const Task = pgTable("tasks", (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
@@ -35,7 +35,7 @@ export const Task = pgTable("tasks", (t) => ({
   updatedAt: t
     .timestamp("updated_at", { mode: "date", withTimezone: true })
     .$onUpdateFn(() => sql`now()`),
-}));
+})).enableRLS();
 
 export const authSchema = pgSchema("auth");
 
@@ -54,7 +54,7 @@ export const User = pgTable("users", (t) => ({
     withTimezone: true,
   }),
   createdAt: t.timestamp("created_at").defaultNow().notNull(),
-}));
+})).enableRLS();
 
 export const CreatePostSchema = createInsertSchema(Post, {
   title: z.string().max(256),
