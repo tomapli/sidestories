@@ -10,7 +10,19 @@ export default async function AdminPage() {
   const session = await getSession();
 
   if (session) {
-    redirect("/admin/dashboard");
+    const supabase = await createSupabaseServerClient();
+    const { data: adminUser } = await supabase
+      .from("users")
+      .select("user_id")
+      .eq("user_id", session.user.id)
+      .not("admin_since", "is", null)
+      .maybeSingle();
+
+    if (adminUser) {
+      redirect("/admin/dashboard");
+    }
+
+    redirect("/admin/request-access");
   }
 
   return (
@@ -46,7 +58,7 @@ export default async function AdminPage() {
               const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
                 options: {
-                  redirectTo: `${origin ?? ""}/auth/callback?next=/admin/dashboard`,
+                  redirectTo: `${origin ?? ""}/auth/callback?next=/admin/request-access`,
                 },
               });
 

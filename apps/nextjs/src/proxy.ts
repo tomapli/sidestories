@@ -32,7 +32,38 @@ export async function proxy(request: NextRequest) {
     },
   );
 
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (request.nextUrl.pathname === "/admin/request-access") {
+    if (!user) {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+
+    return response;
+  }
+
+  if (request.nextUrl.pathname.startsWith("/admin/")) {
+    const redirectToAdmin = NextResponse.redirect(
+      new URL("/admin", request.url),
+    );
+
+    if (!user) {
+      return redirectToAdmin;
+    }
+
+    const { data: adminUser } = await supabase
+      .from("users")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .not("admin_since", "is", null)
+      .maybeSingle();
+
+    if (!adminUser) {
+      return redirectToAdmin;
+    }
+  }
 
   return response;
 }
