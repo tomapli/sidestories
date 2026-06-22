@@ -403,6 +403,9 @@ importers:
       '@acme/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.18.12
       drizzle-kit:
         specifier: ^0.31.5
         version: 0.31.5
@@ -415,6 +418,8 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+
+  packages/supabase: {}
 
   packages/ui:
     dependencies:
