@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           {
-            echo "POSTGRES_URL=${POSTGRES_MIGRATION_URL}"
+            echo "POSTGRES_URL=${POSTGRES_URL}"
           } > .env
         env:
           POSTGRES_URL: ${{ secrets.POSTGRES_MIGRATION_URL }}
