@@ -110,6 +110,20 @@ Enable Discord as an OAuth provider in Supabase and add these redirect URLs:
 - Next.js: `http://localhost:3000/auth/callback`
 - Expo: `expo://`
 
+### Database migrations
+
+Schema definitions live in `packages/db/src/schema.ts`. After changing them, create a Supabase migration with:
+
+```bash
+pnpm db:migration new-migration
+```
+
+This pushes the Drizzle schema to the linked Supabase project, writes the migration under `supabase/migrations/`, and marks it as applied on that project. To apply committed Supabase migrations to another environment, run:
+
+```bash
+pnpm db:migrate
+```
+
 ### 3. Configure Expo `dev`-script
 
 #### Use iOS Simulator

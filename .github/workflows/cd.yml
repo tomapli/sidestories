@@ -25,18 +25,16 @@ jobs:
       - name: Setup
         uses: ./tooling/github/setup
 
-      - name: Write database environment
-        shell: bash
-        run: |
-          {
-            echo "POSTGRES_URL=${POSTGRES_URL}"
-          } > .env
+      - name: Link Supabase project
+        run: supabase link --project-ref xpxpbfzxavfnvxhfcecq --password "$SUPABASE_DB_PASSWORD"
         env:
-          POSTGRES_URL: ${{ secrets.POSTGRES_MIGRATION_URL }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
 
-      # Applies the migration files committed under supabase/drizzle. This is
-      # non-interactive: it can only run schema decisions that were already made
-      # (and reviewed) via `pnpm db:generate`. Anything not captured in a
-      # committed migration is simply not deployed.
+      # Applies the migration files committed under supabase/migrations.
+      # Anything not captured in a committed Supabase migration is not deployed.
       - name: Apply database migrations
-        run: pnpm db:migrate
+        run: supabase db push --password "$SUPABASE_DB_PASSWORD"
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
