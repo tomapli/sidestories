@@ -23,6 +23,7 @@
     "dev": "tsc",
     "db:local:push": "POSTGRES_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres pnpm push",
     "format": "prettier --check . --ignore-path ../../.gitignore",
+    "generate": "pnpm with-env drizzle-kit generate",
     "lint": "eslint --flag unstable_native_nodejs_ts_config",
     "push": "pnpm with-env drizzle-kit push",
     "studio": "pnpm with-env drizzle-kit studio",
